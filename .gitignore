@@ -111,7 +111,9 @@ certifi/*
 certifi-*
 chardet/*
 chardet-*
+urllib3-*
 urllib3/*
+xmltodict-*
 xmltodict/*
 xmltodict.py
 
