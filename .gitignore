@@ -126,3 +126,5 @@ socks*
 .DS_Store
 
 config.py
+
+*.zip
