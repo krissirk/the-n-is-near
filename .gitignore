@@ -124,3 +124,5 @@ twilio*
 socks*
 
 .DS_Store
+
+config.py
