@@ -1,4 +1,17 @@
 import requests, xmltodict, datetime
+from twilio.rest import Client
+from config import *
+
+# Set Twilio auth values and phone numbers
+if TWILIO_ACCOUNT_SID:
+    account_sid = TWILIO_ACCOUNT_SID
+    auth_token = TWILIO_AUTH_TOKEN
+    toNumber = TWILIO_TO_NUMBER
+    fromNumber = TWILIO_FROM_NUMBER
+    client = Client(account_sid, auth_token)
+else:
+	print("Twilio credentials not found!")
+	sys.exit(2)
 
 # Initialize message that Alexa will announce to requestor
 predictionMessage = ""
@@ -65,3 +78,11 @@ response = {
 
 # Print the JSON for Alexa to speak
 print(response)
+
+# Text message as SMS via Twilio, along with link for updated predictions
+message = client.messages.create(
+    to=toNumber,
+    from_=fromNumber,
+    body=predictionMessage + " Check latest at https://goo.gl/c2xnx2.")
+
+print(message.sid)
