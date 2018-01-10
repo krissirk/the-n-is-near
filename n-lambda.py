@@ -1,8 +1,16 @@
-import requests, xmltodict, datetime
+import requests, xmltodict, datetime, os
+from twilio.rest import Client
 
 # Initialize message that Alexa will announce to requestor
 predictionMessage = ""
 
+# Set Twilio auth values and phone numbers, retreiving values from AWS Lambda environment variables
+account_sid = os.environ.get("TWILIO_ACCOUNT_SID")
+auth_token = os.environ.get("TWILIO_AUTH_TOKEN")
+toNumber = os.environ.get("TWILIO_TO_NUMBER")
+fromNumber = os.environ.get("TWILIO_FROM_NUMBER")
+
+# Cache buster for Nextbus request
 timestamp = datetime.datetime.now().timestamp()
 
 ### Obtain predictions for the SF N Muni train in both directions at Carl & Cole via Nextbus webservice ###
@@ -49,6 +57,13 @@ except Exception as err:
     predictionMessage = "Predictions not available due to " + str(err) + " error. Please try again later."
     print(err)
 
+# Send SMS with train info via Twilio
+message = client.messages.create(
+    to=toNumber,
+    from_=fromNumber,
+    body=predictionMessage + " Check latest at https://goo.gl/c2xnx2.")
+
+# Lambda function that powers Alexa skill
 def lambda_handler(event, context):
 
     response = {

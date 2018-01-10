@@ -2,7 +2,7 @@ import requests, xmltodict, datetime
 from twilio.rest import Client
 from config import *
 
-# Set Twilio auth values and phone numbers
+# Set Twilio auth values and phone numbers from local config
 if TWILIO_ACCOUNT_SID:
     account_sid = TWILIO_ACCOUNT_SID
     auth_token = TWILIO_AUTH_TOKEN
@@ -16,6 +16,7 @@ else:
 # Initialize message that Alexa will announce to requestor
 predictionMessage = ""
 
+# Cache buster for Nextbus request
 timestamp = datetime.datetime.now().timestamp()
 
 ### Obtain predictions for the SF N Muni train in both directions at Carl & Cole via Nextbus webservice ###
