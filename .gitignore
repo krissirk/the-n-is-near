@@ -116,5 +116,11 @@ urllib3/*
 xmltodict-*
 xmltodict/*
 xmltodict.py
+jwt/*
+PyJWT-1.5.3.dist-info/*
+pytz*
+six*
+twilio*
+socks*
 
 .DS_Store
